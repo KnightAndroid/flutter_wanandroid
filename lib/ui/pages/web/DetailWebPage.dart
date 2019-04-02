@@ -64,6 +64,7 @@ class DetailWebPageState extends State<DetailWebPage> {
       //1.WebViewState.shouldStart,准备加载
       //2.WebViewState.startLoad,开始加载
       //3.WebViewState.finishLoad,加载完成
+      //4.WebViewState.abortLoad,停止加载
       //做判断
       switch (state.type) {
         case WebViewState.shouldStart:
@@ -80,6 +81,8 @@ class DetailWebPageState extends State<DetailWebPage> {
             //当前是回调页面，则调用js方法获取
 
           }
+          break;
+        case WebViewState.abortLoad:
           break;
       }
     });

@@ -195,11 +195,27 @@ class OfficialPageState extends State<OfficialPage>
             children: <Widget>[
             //  new Hero(tag: 'Image', child: new Image.asset('res/img1.png')),
               new Container(
+                //设置内容居中
+                alignment: Alignment.center,
+                //设置内边距
+                padding: const EdgeInsets.all(10.0),
                 height: 140.0,
-                color: colorsByPage[Random().nextInt(4)],
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("images/image_official.png"),
+                      fit: BoxFit.cover,
+                  ),
+                ),
+                //color: colorsByPage[Random().nextInt(4)],
+                child: new Text(
+                    "欢迎关注鸿洋的公众号，每天为您推送高质量文章，让你每天都能涨知识。点击历史消息，查看所有已推送的文章，喜欢可以置顶本公众号。本公众号支持投稿，如果你有原创的文章，希望通过本公众号发布，欢迎投稿。",
+                    //文字对齐方式
+                    textAlign: TextAlign.justify,
+                    style: new TextStyle(color: ResColors.colorWhite),
+                ),
               ),
               new Padding(
-                padding: new EdgeInsets.all(16.0),
+                padding: new EdgeInsets.all(10.0),
                 child: new Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,16 +228,21 @@ class OfficialPageState extends State<OfficialPage>
                           tag: 'Title',
                           child: new Text('生命不息，奋斗不止，万事起于忽微，量变引起质变',
                               style: new TextStyle(
-                                  fontSize: 10.0,
+                                  fontSize: 20.0,
                                   color: Colors.black,
                                   fontWeight: FontWeight.w600)),
                         ),
+                        new Padding(padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0)),
                         new Text('鸿洋',
-                            style: new TextStyle(fontSize: 16.0)),
+                            style: new TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                                color: ResColors.colorBlue),
+                        ),
                       ],
                     ),
                     new Padding(
-                      padding: new EdgeInsets.only(top: 8.0),
+                      padding: new EdgeInsets.only(top: 30.0),
                       child: new Material(
                         color: colorsByPage[0],
                         borderRadius: new BorderRadius.circular(64.0),
@@ -236,14 +257,19 @@ class OfficialPageState extends State<OfficialPage>
 //                          );
                           getArticle();
                           },
-                          child: new Container(
-                            margin: new EdgeInsets.symmetric(
-                                vertical: 14.0, horizontal: 40.0),
-                            child: new Text('进入',
-                                style: new TextStyle(
-                                    fontWeight: FontWeight.w300,
-                                    color: Colors.white)),
-                          ),
+
+
+
+                             child: new Container(
+                              margin: new EdgeInsets.symmetric(
+                                  vertical: 14.0, horizontal: 40.0),
+                              child: new Text('进入',
+                                  style: new TextStyle(
+                                      fontWeight: FontWeight.w300,
+                                      color: Colors.white)),
+                            ),
+
+
                         ),
                       ),
                     )
@@ -284,6 +310,7 @@ class OfficialPageState extends State<OfficialPage>
         });
       });
     },errorCallBack: (data){
+       // 打印错误信息
        print(data);
     });
   }

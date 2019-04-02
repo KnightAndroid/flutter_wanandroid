@@ -65,7 +65,9 @@ flutter:
    - images/image_login_logo.jpg
    - images/image_author_logo.png
    - images/image_hotsearch.png
+   - images/image_official.png
    - images/image_time_progress.png
+
 
   fonts:
     - family: WorkSansSemiBold
