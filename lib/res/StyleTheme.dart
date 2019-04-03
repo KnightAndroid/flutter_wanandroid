@@ -67,4 +67,11 @@ class StyleTheme {
     return speakerNameStyle;
   }
 
+  //蓝色字体样式分类
+  TextStyle getBelongStyle(){
+    TextStyle belongDescriptStyle = theme.textTheme.caption.merge(
+      const TextStyle(color: ResColors.colorBlue),
+    );
+    return belongDescriptStyle;
+  }
 }

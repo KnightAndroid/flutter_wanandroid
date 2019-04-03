@@ -22,5 +22,6 @@ class Api{
   static final String searchQuery = "article/query/";
   //公众号
   static final String wxArticle = "wxarticle/chapters/json";
-
+  //具体的公众号历史数据
+  static final String histroyWxArticle = "wxarticle/list/";
 }

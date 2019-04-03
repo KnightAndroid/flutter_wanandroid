@@ -30,10 +30,9 @@ class HomePageState extends State<HomePage> {
   BannerWidget bannerWidget;
   bool isCollect = false;
 
-  //滑动控制
+  //滑动底部控制
   ScrollController _scrollController;
-  //滚动底部监听
-  //ScrollController scrollController ;
+
 
   //当前页数
   int currentPage = 0;
@@ -45,17 +44,17 @@ class HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _scrollController = new ScrollController();
-    //添加滚动监听事件
-    _scrollController.addListener(() {
-      var maxScroll = _scrollController.position.maxScrollExtent;
-      var pixels = _scrollController.position.pixels;
-      print(maxScroll);
-      print(pixels);
-      if (maxScroll == pixels && normalList.length < listTotalSize) {
-         getHomeItem();
-      }
-    });
+//    _scrollController = new ScrollController();
+//    //添加滚动监听事件
+//    _scrollController.addListener(() {
+//      var maxScroll = _scrollController.position.maxScrollExtent;
+//      var pixels = _scrollController.position.pixels;
+//      print(maxScroll);
+//      print(pixels);
+//      if (maxScroll == pixels && normalList.length < listTotalSize) {
+//         getHomeItem();
+//      }
+//    });
     //获取轮播图
     getBanner();
     //获取首页文章列表信息

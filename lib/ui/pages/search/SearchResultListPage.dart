@@ -40,8 +40,7 @@ class SearchResultListPageState extends State<SearchResultListPage> {
   //得到的数据
   List resultData = new List();
 
-  //中间数据
-  List tempList = new List();
+
   int listTotalSize = 0;
 
   SearchResultListPageState(this.searchContent);
@@ -55,6 +54,8 @@ class SearchResultListPageState extends State<SearchResultListPage> {
   @override
   void initState() {
     super.initState();
+
+
     addListener();
     searchQuery();
   }
@@ -71,6 +72,7 @@ class SearchResultListPageState extends State<SearchResultListPage> {
       return new RefreshIndicator(
           child: new ListView.builder(
               itemCount: resultData.length, //数据长度
+              controller: _scrollController,
               itemBuilder: (context, i) {
                 return getItemWidget(i);
               }),
@@ -270,11 +272,15 @@ class SearchResultListPageState extends State<SearchResultListPage> {
     _scrollController.addListener(() {
       var maxScroll = _scrollController.position.maxScrollExtent;
       var pixels = _scrollController.position.pixels;
+      print(maxScroll);
+      print(pixels);
       if (maxScroll == pixels && resultData.length < listTotalSize) {
         //这里是滚动到底 并且数据页数没有达到总页数
         searchQuery();
       }
     });
+
+
   }
 
   //下拉刷新
@@ -286,10 +292,12 @@ class SearchResultListPageState extends State<SearchResultListPage> {
 
   //获得搜索数据
   void searchQuery() {
+    print("请求了");
     String url = Api.searchQuery;
     //因为格式是：https://www.wanandroid.com/article/query/0/json
     //所以要加上/0/json
     url = url + "$currentPage/json";
+    print(url);
     //带上搜索参数
     map['k'] = searchContent;
     //post请求
@@ -305,7 +313,8 @@ class SearchResultListPageState extends State<SearchResultListPage> {
             //取具体数值
             var _datas = map['datas'];
             setState(() {
-              tempList.clear();
+              //中间数据
+              List tempList = new List();
               if (currentPage == 0) {
                 resultData.clear();
               }
@@ -314,8 +323,6 @@ class SearchResultListPageState extends State<SearchResultListPage> {
               tempList.addAll(resultData);
               tempList.addAll(_datas);
               //这里要判断集合的总数是否大于数据的总数
-              print(tempList.length);
-              print(listTotalSize);
               if (tempList.length >= listTotalSize) {
                 //如果是
                 tempList.add("notData");
@@ -328,6 +335,7 @@ class SearchResultListPageState extends State<SearchResultListPage> {
         params: map,
         errorCallBack: (msg) {
           //错误回调方法
+          print(msg);
           ToastUtils.showLongCenterToast(context, msg);
         });
   }
@@ -340,5 +348,12 @@ class SearchResultListPageState extends State<SearchResultListPage> {
       return new DetailWebPage(web_title: resultData[pos]['title'], web_url: resultData[pos]['link']);
     }),
     );
+  }
+
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
   }
 }

@@ -67,6 +67,7 @@ flutter:
    - images/image_hotsearch.png
    - images/image_official.png
    - images/image_time_progress.png
+   - images/image_android_circle.png
 
 
   fonts:

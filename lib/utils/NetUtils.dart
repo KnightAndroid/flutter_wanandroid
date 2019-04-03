@@ -131,7 +131,7 @@ class NetUtils{
          }
 
        }catch(ex){
-         handError(errorCallBack, errorMsg.toString());
+         handError(errorCallBack, ex.toString());
        }
 
 

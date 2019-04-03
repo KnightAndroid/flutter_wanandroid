@@ -17,6 +17,8 @@ class ResColors {
   //灰白色
   static const Color colorFFWhite = Color(0xFFEEEEEE);
   static const Color colorWhite10 = Color(0x1AFFFFFF);
+  //红色
+  static const Color colorRed = Color(0xFFF44336);
   //蓝色
   static const Color colorBlue = Color(0xFF2196F3);
   static const MaterialColor blue = MaterialColor(

@@ -221,9 +221,13 @@ class _HtmlParser {
         new Container(
            // padding: const EdgeInsets.all(8.0),
             child: new RichText(
+                textAlign: TextAlign.justify,
+                softWrap: false,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 3,
                 text: new TextSpan(
                     style: contentStyle,
-                    children: new List.from(_currentTextSpans)
+                    children: new List.from(_currentTextSpans),
                 )
             )
         )
