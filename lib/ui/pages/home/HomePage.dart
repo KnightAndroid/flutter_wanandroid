@@ -32,29 +32,42 @@ class HomePageState extends State<HomePage> {
 
   //滑动底部控制
   ScrollController _scrollController;
-
-
   //当前页数
   int currentPage = 0;
-
   //总条数
   int listTotalSize = 0;
+
+  //是否显示回到顶部的按钮图标
+  bool isShowGoTop = false;
 
   //初始化操作
   @override
   void initState() {
     super.initState();
-//    _scrollController = new ScrollController();
-//    //添加滚动监听事件
-//    _scrollController.addListener(() {
-//      var maxScroll = _scrollController.position.maxScrollExtent;
-//      var pixels = _scrollController.position.pixels;
-//      print(maxScroll);
-//      print(pixels);
-//      if (maxScroll == pixels && normalList.length < listTotalSize) {
-//         getHomeItem();
-//      }
-//    });
+    print("第一次进入首页");
+    _scrollController = new ScrollController();
+    //添加滚动监听事件
+    _scrollController.addListener(() {
+      var maxScroll = _scrollController.position.maxScrollExtent;
+      var pixels = _scrollController.position.pixels;
+      if (maxScroll == pixels && normalList.length < listTotalSize) {
+         getHomeItem();
+      }
+
+      //如果滚动位置
+      if(_scrollController.offset < 180 && isShowGoTop){
+         setState(() {
+           isShowGoTop = false;
+         });
+      } else if(_scrollController.offset >= 180 && !isShowGoTop){
+        setState(() {
+          isShowGoTop = true;
+        });
+      }
+
+
+
+    });
     //获取轮播图
     getBanner();
     //获取首页文章列表信息
@@ -66,7 +79,7 @@ class HomePageState extends State<HomePage> {
     String bannerUrl = Api.bannerUrl;
 
     //请求接口 获取数据
-    NetUtils.get(bannerUrl, (data) {
+    NetUtils().get(bannerUrl, (data) {
       if (data != null) {
         bannerList = data;
         banner.clear();
@@ -92,7 +105,7 @@ class HomePageState extends State<HomePage> {
     String article_list = Api.articleList;
     article_list = article_list + "$currentPage/json";
     print(article_list);
-    NetUtils.get(article_list, (data) {
+    NetUtils().get(article_list, (data) {
       //获取首页列表信息
       if (data != null) {
         Map<String, dynamic> map = data;
@@ -153,7 +166,10 @@ class HomePageState extends State<HomePage> {
               },
             ),
             onRefresh: onRefresh),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton:
+          !isShowGoTop
+          ? null
+          : FloatingActionButton(
             backgroundColor: Theme.of(context).primaryColor.withAlpha(180),
             child: Icon(Icons.arrow_upward),
             onPressed: () {

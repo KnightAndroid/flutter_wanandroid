@@ -780,7 +780,7 @@ class LoginPageState extends State<LoginPage>
     map['username'] = userName;
     map['password'] = passWord;
 
-    NetUtils.post(
+    NetUtils().post(
         Api.userLogin,
         (data) async {
           UserMessageUtils.saveUserInfo(data['username']).then((result){

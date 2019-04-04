@@ -196,7 +196,7 @@ class OfficialDetailPageState extends State<OfficialDetailPage>
     //下面要拼接url
     wxDetailArticleUrl =
         wxDetailArticleUrl + "$wxArticleId" + "/" + "$currentPage";
-    NetUtils.get(wxDetailArticleUrl, (data) {
+    NetUtils().get(wxDetailArticleUrl, (data) {
       //返回的数据
       if (data != null) {
         Map<String, dynamic> map = data;

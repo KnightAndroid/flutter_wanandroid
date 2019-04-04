@@ -71,6 +71,7 @@ class OfficialPageState extends State<OfficialPage>
   @override
   void initState() {
     super.initState();
+    print("公众号第一次进入");
     //初始化TabTitle
     initTabData();
   }
@@ -354,7 +355,7 @@ class OfficialPageState extends State<OfficialPage>
   //获取公众号数据
   void getArticle() {
     String wxArticle = Api.wxArticle;
-    NetUtils.get(wxArticle, (data) {
+    NetUtils().get(wxArticle, (data) {
       List temp = data;
       for (var i = 0; i < temp.length; i++) {
         var item = temp[i];

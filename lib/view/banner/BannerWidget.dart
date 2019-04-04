@@ -21,7 +21,7 @@ class BannerWidget extends StatefulWidget{
   final int delayTime;//时间(毫秒)
   final int duration;//切换速度(毫秒)
 
-
+  //高默认180
   BannerWidget(
   {Key key,@required this.bannerModel,this.height = 180,this.delayTime = 1500,this.duration = 1500,this.bannerPress,this.build}
       ) :super(key:key);

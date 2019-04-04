@@ -161,7 +161,7 @@ class SearchHotState extends State<SearchHotPage> {
 
   //获取热门关键字
   void getHotKeyWords() {
-    NetUtils.get(Api.hotKeyWords, (data) {
+    NetUtils().get(Api.hotKeyWords, (data) {
       setState(() {
         //状态更新
         List hotKeydatas = data;

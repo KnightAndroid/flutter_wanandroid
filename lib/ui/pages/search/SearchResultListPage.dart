@@ -301,7 +301,7 @@ class SearchResultListPageState extends State<SearchResultListPage> {
     //带上搜索参数
     map['k'] = searchContent;
     //post请求
-    NetUtils.post(
+    NetUtils().post(
         url,
         (data) {
           //如果数据不为空

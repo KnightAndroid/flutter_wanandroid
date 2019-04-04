@@ -42,9 +42,8 @@ class MainPageState extends State<MainPage> with TickerProviderStateMixin{
   };
 
   void _onTapBottom(int position){
-     indexPosition = position;
      setState(() {
-
+       indexPosition = position;
      });
 
   }
@@ -175,7 +174,7 @@ class MainPageState extends State<MainPage> with TickerProviderStateMixin{
 
   initData(){
     indexStack = new IndexedStack(
-      children: <Widget>[new HomePage(),new ProjectPage(),new OfficialPage(),new NavaigationPage(),new MePage()],
+      children: <Widget>[ HomePage(), ProjectPage(), OfficialPage(), NavaigationPage(), MePage()],
       index: indexPosition,
     );
   }
