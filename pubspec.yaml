@@ -40,6 +40,8 @@ dependencies:
   flutter_html_widget: ^0.0.2
   # 网络检测库
   connectivity: ^0.4.2+1
+  # 左滑删除库
+  flutter_slidable: ^0.4.9
 
 
 
@@ -66,7 +68,7 @@ flutter:
    - images/image_login_logo.jpg
    - images/image_author_logo.png
    - images/image_hotsearch.png
-   - images/image_official.png
+   - images/image_official.jpg
    - images/image_time_progress.png
    - images/image_android_circle.png
 

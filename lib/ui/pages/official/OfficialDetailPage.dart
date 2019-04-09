@@ -6,6 +6,7 @@ import 'package:wanandroid/widget/FootListViewWidget.dart';
 import 'package:wanandroid/res/StyleTheme.dart';
 import 'package:wanandroid/res/ResColors.dart';
 import 'package:wanandroid/widget/HtmlWidget.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class OfficialDetailPage extends StatefulWidget {
   //公众号id
@@ -100,84 +101,82 @@ class OfficialDetailPageState extends State<OfficialDetailPage>
 //          ),
 //        ),
 
-
-      body:new Material(
-        child:    new Stack(
+      body: new Material(
+        child: new Stack(
           children: <Widget>[
-            new ListView.builder(
-                //把状态栏顶上去
-                padding: new EdgeInsets.all(0.0),
-                itemCount: 10,
-                controller: scrollController,
-                itemBuilder: (context, i) {
-                  return getListViewItemWidget(i);
-                }),
-
-            new Align
-              (
+//            new ListView.builder(
+//                //把状态栏顶上去
+//                padding: new EdgeInsets.all(0.0),
+//                itemCount: 10,
+//                controller: scrollController,
+//                itemBuilder: (context, i) {
+//                  return getListViewItemWidget(i);
+//                }),
+            new OrientationBuilder(
+              builder: (context, orientation) => _buildList(
+                  context,
+                  orientation == Orientation.portrait
+                      ? Axis.vertical
+                      : Axis.horizontal),
+            ),
+            new Align(
               alignment: Alignment.topCenter,
-              child: new SizedBox.fromSize
-                (
+              child: new SizedBox.fromSize(
                 size: new Size.fromHeight(90.0),
-                child: new Stack
-                  (
+                child: new Stack(
                   alignment: Alignment.centerLeft,
-                  children: <Widget>
-                  [
+                  children: <Widget>[
                     new SizedBox.expand // If the user scrolled over the image
-                      (
-                      child: new Material
                         (
+                      child: new Material(
                         color: colorTween1.value,
                       ),
                     ),
                     new SizedBox.fromSize // TODO: Animate the reveal
-                      (
-                      size: new Size.fromWidth(MediaQuery.of(context).size.width * readPerc),
-                      child: new Material
                         (
+                      size: new Size.fromWidth(
+                          MediaQuery.of(context).size.width * readPerc),
+                      child: new Material(
                         color: colorTween2.value,
                       ),
                     ),
-                    new Align
-                      (
+                    new Align(
                         alignment: Alignment.center,
-                        child: new SizedBox.expand
-                          (
-                          child: new Material // So we see the ripple when clicked on the iconbutton
-                            (
-                            color: Colors.transparent,
-                            child: new Container
-                              (
-                                margin: new EdgeInsets.only(top: 24.0), // For the status bar
-                                child: new Row
+                        child: new SizedBox.expand(
+                          child:
+                              new Material // So we see the ripple when clicked on the iconbutton
                                   (
+                            color: Colors.transparent,
+                            child: new Container(
+                                margin: new EdgeInsets.only(top: 24.0),
+                                // For the status bar
+                                child: new Row(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>
-                                  [
-                                    new IconButton
-                                      (
-                                      onPressed: () => Navigator.of(context).pop(),
-                                      icon: new Icon(Icons.arrow_back, color: Colors.white),
+                                  children: <Widget>[
+                                    new IconButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                      icon: new Icon(Icons.arrow_back,
+                                          color: Colors.white),
                                     ),
 //                                  new Hero
 //                                    (
 //                                      tag: 'Logo',
 //                                      child: new Icon(Icons.account_circle, color: Colors.white, size: 48.0)
 //                                  ),
-                                    new IconButton
-                                      (
-                                      onPressed: () => Navigator.of(context).pop(),
-                                      icon: new Icon(Icons.format_align_right, color: Colors.white),
+                                    new IconButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                      icon: new Icon(Icons.format_align_right,
+                                          color: Colors.white),
                                     ),
                                   ],
-                                )
-                            ),
+                                )),
                           ),
-                        )
-                    )
+                        ))
                   ],
                 ),
               ),
@@ -185,12 +184,10 @@ class OfficialDetailPageState extends State<OfficialDetailPage>
           ],
         ),
       ),
-
-
-
     );
   }
 
+  //获取文章历史
   void getWxArticleHistroy() {
     String wxDetailArticleUrl = Api.histroyWxArticle;
     //下面要拼接url
@@ -231,25 +228,172 @@ class OfficialDetailPageState extends State<OfficialDetailPage>
     });
   }
 
-  //返回List列表数据
-  Widget getListViewItemWidget(int index) {
-    //这里要做判断
-    //得到本项数据
-//    var _itemData = officialListData[index];
-//    if (index == officialListData.length - 1 &&
-//        _itemData.toString() == "notData") {
-//      //如果是最后一项 返回数据已经加载完
-//      return new FootListViewWidget();
-//    }
-    return getNormalItemWidget(index);
+  //构建ListView列表项
+  Widget _buildList(BuildContext context, Axis direction) {
+    return new ListView.builder(
+        //把状态栏顶上去
+        padding: new EdgeInsets.all(0.0),
+        //设置排列方式
+        scrollDirection: direction,
+        itemCount: 10,
+        controller: scrollController,
+        itemBuilder: (context, i) {
+          final Axis slidableDirection =
+              direction == Axis.horizontal ? Axis.vertical : Axis.horizontal;
+          //这里要做判断
+          if (i == 0) {
+            return getHeadWidget();
+          } else {
+            return _getSlidableWithDelefates(context, i, slidableDirection);
+          }
+          //  return getListViewItemWidget(i);
+        });
   }
+
+  //构建ListView列表项
+  Widget _getSlidableWithDelefates(
+      BuildContext context, int index, Axis direction) {
+    // var _item = officialListData[index];
+
+    return new Slidable.builder(
+      //key是必须的
+      key: new Key("111"),
+      direction: direction,
+      slideToDismissDelegate: new SlideToDismissDrawerDelegate(
+          closeOnCanceled: false,
+          onDismissed: (actionType) {
+            _showSnackBar(
+                context,
+                actionType == SlideActionType.primary
+                    ? 'Dismiss Archive'
+                    : 'Dismiss Delete');
+            //更新状态
+            setState(() {});
+          }),
+      //孩子布局
+      child: getNormalItemWidget(index),
+      delegate: _getDelegate(index),
+      actionExtentRatio: 0.25,
+      actionDelegate: new SlideActionBuilderDelegate(
+        actionCount: 2,
+        builder: (context, index, animation, renderingMode) {
+          //左边第一个 从0开始
+          if (index == 0) {
+            return new Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: new IconSlideAction(
+                caption: 'Archive',
+                color: renderingMode == SlidableRenderingMode.slide
+                    ? Colors.blue.withOpacity(animation.value)
+                    : (renderingMode == SlidableRenderingMode.dismiss
+                        ? Colors.blue
+                        : Colors.green),
+                icon: Icons.archive,
+                onTap: () async {
+                  var state = Slidable.of(context);
+                  //弹窗对话框
+                  var dismiss = await showDialog<bool>(
+                      context: context,
+                      builder: (context) {
+                        return new AlertDialog(
+                          title: new Text("删除"),
+                          content: new Text("此项将被删除"),
+                          actions: <Widget>[
+                            new FlatButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: new Text('删除'),
+                            ),
+                            new FlatButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: new Text("确定"),
+                            ),
+                          ],
+                        );
+                      });
+
+                  if (dismiss) {
+                    state.dismiss();
+                  }
+                },
+              ),
+            );
+          } else {
+            return new Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: new IconSlideAction(
+                caption: '分享',
+                color: renderingMode == SlidableRenderingMode.slide
+                    ? Colors.indigo.withOpacity(animation.value)
+                    : Colors.indigo,
+                icon: Icons.share,
+                onTap: () => _showSnackBar(context, 'Share'),
+              ),
+            );
+          }
+        },
+      ),
+      secondaryActionDelegate: new SlideActionBuilderDelegate(
+        actionCount: 2,
+        builder: (context, index, animation, renderingMode) {
+          if (index == 0) {
+            return new Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: new IconSlideAction(
+                caption: "更多",
+                color: renderingMode == SlidableRenderingMode.slide
+                    ? Colors.grey.shade200.withOpacity(animation.value)
+                    : Colors.grey.shade200,
+                icon: Icons.more_horiz,
+                onTap: () => _showSnackBar(context, '更多'),
+                closeOnTap: false,
+              ),
+            );
+          } else {
+            return new Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: new IconSlideAction(
+                caption: '删除',
+                icon: Icons.delete,
+                color: renderingMode == SlidableRenderingMode.slide
+                    ? Colors.red.withOpacity(animation.value)
+                    : Colors.red,
+                onTap: () => _showSnackBar(context, '删除'),
+              ),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  //底部弹出框
+  void _showSnackBar(BuildContext context, String text) {
+    Scaffold.of(context).showSnackBar(SnackBar(content: new Text(text)));
+  }
+
+  static SlidableDelegate _getDelegate(int index) {
+    return new SlidableDrawerDelegate();
+  }
+
+//  //返回List列表数据
+//  Widget getListViewItemWidget(int index) {
+//    //这里要做判断
+//    //得到本项数据
+////    var _itemData = officialListData[index];
+////    if (index == officialListData.length - 1 &&
+////        _itemData.toString() == "notData") {
+////      //如果是最后一项 返回数据已经加载完
+////      return new FootListViewWidget();
+////    }
+//    return getNormalItemWidget(index);
+//  }
 
   //返回普通列表数据
   Widget getNormalItemWidget(int index) {
     //如果第一项就返回
-    if (index == 0) {
-      return getHeadWidget();
-    }
+//    if (index == 0) {
+//      return getHeadWidget();
+//    }
 
     return getNormalWidget(index);
   }
@@ -263,7 +407,7 @@ class OfficialDetailPageState extends State<OfficialDetailPage>
         child: new Padding(
           padding: const EdgeInsets.only(bottom: 12.0),
           child: new Image.asset(
-            "images/image_official.png",
+            "images/image_official.jpg",
             fit: BoxFit.cover,
           ),
         ),

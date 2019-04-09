@@ -259,7 +259,7 @@ class OfficialPageState extends State<OfficialPage>
                         // height: 140.0,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage("images/image_official.png"),
+                            image: AssetImage("images/image_official.jpg"),
                             fit: BoxFit.cover,
                           ),
                         ),
