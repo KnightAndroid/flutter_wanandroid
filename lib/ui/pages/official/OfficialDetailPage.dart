@@ -430,13 +430,18 @@ class OfficialDetailPageState extends State<OfficialDetailPage>
               children: <Widget>[
                 //安卓头像
                 new Image.asset(
-                  "images/image_android_circle",
+                  "images/image_android_circle.png",
+                  width: 20,
+                  height: 20,
                 ),
                 //与左边头像距离
                 new Expanded(
-                  child: new Text(
-                    "真·深红骑士",
-                    style: StyleTheme.getInstance(context).getTopicStyle(),
+                  child: new Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: new Text(
+                      "真·深红骑士",
+                      style: StyleTheme.getInstance(context).getTopicStyle(),
+                    ),
                   ),
                 ),
 

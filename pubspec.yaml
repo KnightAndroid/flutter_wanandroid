@@ -69,8 +69,9 @@ flutter:
    - images/image_author_logo.png
    - images/image_hotsearch.png
    - images/image_official.jpg
-   - images/image_time_progress.png
    - images/image_android_circle.png
+   - images/image_time_progress.png
+
 
 
   fonts:

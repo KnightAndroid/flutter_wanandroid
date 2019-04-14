@@ -157,8 +157,8 @@ class OfficialPageState extends State<OfficialPage>
                 children: <Widget>[
                   new Expanded(
                     child: new SizedBox.expand(
-                      child: new Hero(
-                        tag: 'Materiall',
+//                      child: new Hero(
+//                        tag: 'Materiall',
                         child: new Material(
                           color: Colors.white,
                           elevation: 24.0,
@@ -188,8 +188,8 @@ class OfficialPageState extends State<OfficialPage>
 
                                 //pageView
                                 new Expanded(
-                                  child: new Hero(
-                                    tag: 'Material',
+//                                  child: new Hero(
+//                                    tag: 'Material',
                                     child: PageView.builder(
                                         itemCount: tabList.length,
                                         onPageChanged: (index) {
@@ -206,13 +206,13 @@ class OfficialPageState extends State<OfficialPage>
                                             (BuildContext context, int index) {
                                           return getPageItem(index);
                                         }),
-                                  ),
+//                                  ),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                      ),
+                     // ),
                     ),
                   ),
                 ],
@@ -223,11 +223,6 @@ class OfficialPageState extends State<OfficialPage>
 
   //item布局
   Widget getPageItem(int index) {
-    //  return new SizedBox.expand(
-//    return new GestureDetector(
-//      onTap: (){
-//
-//      },
       return new InkWell(
         onTap: (){
           Navigator.push(context, MaterialPageRoute(builder:(webPage){
@@ -248,10 +243,10 @@ class OfficialPageState extends State<OfficialPage>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   //  new Hero(tag: 'Image', child: new Image.asset('res/img1.png')),
-                  //这里设置hero共享动画
+//                  //这里设置hero共享动画
                   new Hero(
                       tag: "Image",
-                      child: new Container(
+                    child:  new Container(
                         //设置内容居中
                         alignment: Alignment.center,
                         //设置内边距
@@ -273,8 +268,7 @@ class OfficialPageState extends State<OfficialPage>
                       ),
                   ),
 
-
-                  new Padding(
+                 new Padding(
                     padding: new EdgeInsets.all(10.0),
                     child: new Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -284,52 +278,18 @@ class OfficialPageState extends State<OfficialPage>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            new Hero(
-                              tag: 'Title',
-                              child: new Text(officialLists[index].personalMotto,
+
+                             new Text(officialLists[index].personalMotto,
                                   style: new TextStyle(
                                       fontSize: 20.0,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600)),
-                            ),
+
                             new Padding(
                                 padding: const EdgeInsets.fromLTRB(
                                     0.0, 10.0, 0.0, 4.0)),
-//                      new Text('鸿洋',
-//                        style: new TextStyle(
-//                            fontSize: 20.0,
-//                            fontWeight: FontWeight.bold,
-//                            color: ResColors.colorBlue),
-//                      ),
                           ],
                         ),
-//                  new Padding(
-//                    padding: new EdgeInsets.only(top: 30.0),
-//                    child: new Material(
-//                      color: colorsByPage[0],
-//                      borderRadius: new BorderRadius.circular(64.0),
-//                      child: new InkWell(
-//                        onTap: (){
-////                            Navigator.of(context).push(
-////                            new MaterialPageRoute(
-////                              builder: (_) {
-////                                return new DetailWebPage(web_title: "百度", web_url: "https://www.baidu.com");
-////                              },
-////                            ),
-////                          );
-//                          getArticle();
-//                        },
-//                        child: new Container(
-//                          margin: new EdgeInsets.symmetric(
-//                              vertical: 14.0, horizontal: 40.0),
-//                          child: new Text('进入',
-//                              style: new TextStyle(
-//                                  fontWeight: FontWeight.w300,
-//                                  color: Colors.white)),
-//                        ),
-//                      ),
-//                    ),
-//                  )
                       ],
                     ),
                   )
@@ -339,17 +299,6 @@ class OfficialPageState extends State<OfficialPage>
           ),
         ),
       );
-
-
-
-
-
-
-
-
-
-
-    //   );
   }
 
   //获取公众号数据
